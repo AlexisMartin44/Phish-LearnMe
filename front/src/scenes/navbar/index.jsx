@@ -12,11 +12,8 @@ import {
 } from "@mui/material";
 import {
   Search,
-  Message,
   DarkMode,
   LightMode,
-  Notifications,
-  Help,
   Menu,
   Close,
 } from "@mui/icons-material";
@@ -56,7 +53,7 @@ const Navbar = () => {
             },
           }}
         >
-          Sociopedia
+          Phish&LearnMe
         </Typography>
         {isNonMobileScreens && (
           <FlexBetween
@@ -65,7 +62,7 @@ const Navbar = () => {
             gap="3rem"
             padding="0.1rem 1.5rem"
           >
-            <InputBase placeholder="Search..." />
+            <InputBase placeholder="Rechercher..." />
             <IconButton>
               <Search />
             </IconButton>
@@ -83,9 +80,6 @@ const Navbar = () => {
               <LightMode sx={{ color: dark, fontSize: "25px" }} />
             )}
           </IconButton>
-          <Message sx={{ fontSize: "25px" }} />
-          <Notifications sx={{ fontSize: "25px" }} />
-          <Help sx={{ fontSize: "25px" }} />
           <FormControl variant="standard" value={fullName}>
             <Select
               value={fullName}
@@ -107,7 +101,7 @@ const Navbar = () => {
               <MenuItem value={fullName}>
                 <Typography>{fullName}</Typography>
               </MenuItem>
-              <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
+              <MenuItem onClick={() => dispatch(setLogout())}>Déconnexion</MenuItem>
             </Select>
           </FormControl>
         </FlexBetween>
@@ -158,9 +152,6 @@ const Navbar = () => {
                 <LightMode sx={{ color: dark, fontSize: "25px" }} />
               )}
             </IconButton>
-            <Message sx={{ fontSize: "25px" }} />
-            <Notifications sx={{ fontSize: "25px" }} />
-            <Help sx={{ fontSize: "25px" }} />
             <FormControl variant="standard" value={fullName}>
               <Select
                 value={fullName}
@@ -183,7 +174,7 @@ const Navbar = () => {
                   <Typography>{fullName}</Typography>
                 </MenuItem>
                 <MenuItem onClick={() => dispatch(setLogout())}>
-                  Log Out
+                  Déconnexion
                 </MenuItem>
               </Select>
             </FormControl>
