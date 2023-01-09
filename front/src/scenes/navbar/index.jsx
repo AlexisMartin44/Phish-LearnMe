@@ -14,6 +14,7 @@ import {
   Search,
   DarkMode,
   LightMode,
+  LocalShipping,
   Menu,
   Close,
 } from "@mui/icons-material";
@@ -79,6 +80,9 @@ const Navbar = () => {
             ) : (
               <LightMode sx={{ color: dark, fontSize: "25px" }} />
             )}
+          </IconButton>
+          <IconButton onClick={() => navigate("/campains")} >
+            <LocalShipping sx={{ fontSize: "25px" }} />
           </IconButton>
           <FormControl variant="standard" value={fullName}>
             <Select
@@ -152,6 +156,7 @@ const Navbar = () => {
                 <LightMode sx={{ color: dark, fontSize: "25px" }} />
               )}
             </IconButton>
+            <LocalShipping sx={{ fontSize: "25px" }} />
             <FormControl variant="standard" value={fullName}>
               <Select
                 value={fullName}
