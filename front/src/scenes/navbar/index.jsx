@@ -82,7 +82,7 @@ const Navbar = () => {
             )}
           </IconButton>
           <IconButton onClick={() => navigate("/campains")} >
-            <LocalShipping sx={{ fontSize: "25px" }} />
+            <LocalShipping sx={{ color: dark, fontSize: "25px" }} />
           </IconButton>
           <FormControl variant="standard" value={fullName}>
             <Select
