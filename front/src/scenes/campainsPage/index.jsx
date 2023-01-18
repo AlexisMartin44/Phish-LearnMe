@@ -55,14 +55,13 @@ export default function CampainsPage() {
     let campain = JSON.stringify({
       name: name,
       template: {name: template},
-      url: "http://localhost",
+      url: url,
       page: {name: landingPage},
       smtp: {name: sendingProfile},
       launch_date: dateSchedule,
       send_by_date: null,
       groups: [{name: group}]
     });
-    console.log(campain);
     axios.post(`${process.env.REACT_APP_GOPHISH_API}/campaigns/?api_key=${process.env.REACT_APP_GOPHISH_API_KEY}`, campain, {
       headers: {
         'Content-Type': 'application/json',
@@ -77,6 +76,12 @@ export default function CampainsPage() {
         // handle error
         console.log(error);
       });
+    setOpen('');
+    setTemplate('');
+    setName('');
+    setLandingPage('');
+    setUrl('');
+    setGroup('');
   }
 
   const columns = [
@@ -96,7 +101,7 @@ export default function CampainsPage() {
       renderCell: (params) => {
         const onClick = (e) => {
           e.stopPropagation();
-          navigate(`/campains/${params.id}`);
+          navigate(`/campains/${params.id}`, {state:{id: params.id}});
         };
         return <Button onClick={onClick}>Consulter</Button>;
       }
