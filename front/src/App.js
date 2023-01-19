@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
+import SendingProfilesPage from 'scenes/sendingProfilesPage';
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -42,6 +43,10 @@ function App() {
             <Route
               path="/groups"
               element={isAuth ? <GroupsPage /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/sendingprofiles"
+              element={isAuth ? <SendingProfilesPage /> : <Navigate to="/" />}
             />
           </Routes>
         </ThemeProvider>

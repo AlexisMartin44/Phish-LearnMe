@@ -1,4 +1,4 @@
-import { Stack, TextField, Button, Grid, Box } from "@mui/material";
+import { Stack, TextField, Button, Grid } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 import { useState } from 'react';
 
@@ -37,7 +37,7 @@ const FormModifyGroup = ({props}) => {
         retVal += charset.charAt(Math.floor(Math.random() * n));
     }
     return retVal;
-}
+  }
 
 
   const handleAddUser = () => {
