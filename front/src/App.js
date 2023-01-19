@@ -3,6 +3,7 @@ import HomePage from "scenes/homePage";
 import LoginPage from "scenes/loginPage";
 import ProfilePage from "scenes/profilePage";
 import CampainsPage from "scenes/campainsPage";
+import GroupsPage from "scenes/groupsPage";
 import CampainPage from 'scenes/campainPage';
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
@@ -37,6 +38,10 @@ function App() {
             <Route
               path="/campains/:id"
               element={isAuth ? <CampainPage /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/groups"
+              element={isAuth ? <GroupsPage /> : <Navigate to="/" />}
             />
           </Routes>
         </ThemeProvider>

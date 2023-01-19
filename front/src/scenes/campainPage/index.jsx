@@ -23,12 +23,12 @@ export default function CampainPage() {
       });
     }
     getData();
-  }, []);
+  });
 
   return (
     <Box>
       <Navbar />
-      <Typography>Test</Typography>
+      <Typography>{data}</Typography>
       <ProgressCircle size="125" />
     </Box>
   );
