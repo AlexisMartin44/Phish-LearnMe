@@ -76,7 +76,7 @@ export default function CampainsPage() {
         // handle error
         console.log(error);
       });
-    setOpen('');
+    setOpen(false);
     setTemplate('');
     setName('');
     setLandingPage('');
@@ -97,28 +97,19 @@ export default function CampainsPage() {
     {
       field: "action",
       width: 250,
-      headerName: "Consulter la campagne",
+      headerName: "Actions",
       renderCell: (params) => {
-        const onClick = (e) => {
+        const onClickOne = (e) => {
           e.stopPropagation();
           navigate(`/campains/${params.id}`, {state:{id: params.id}});
         };
-        return <Button onClick={onClick}>Consulter</Button>;
-      }
-    },
-    {
-      field: "action2",
-      width: 250,
-      headerName: "Supprimer la campagne",
-      sortable: false,
-      renderCell: (params) => {
-        const onClick = (e) => {
+        const onClickTwo = (e) => {
           e.stopPropagation();
           deleteCampain(params.id);
         };
-        return <Button color="error" onClick={onClick}>Supprimer</Button>;
+        return (<div><Button onClick={onClickOne}>Consulter</Button><Button color="error" onClick={onClickTwo}>Supprimer</Button></div>);
       }
-    }
+    },
   ];
 
   useEffect(() => {
