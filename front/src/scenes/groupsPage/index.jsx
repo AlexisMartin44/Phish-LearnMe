@@ -39,8 +39,7 @@ const GroupsPage = () => {
         setGroupModify(groupData.targets);
         setNameModify(groupData.name);
       }
-    })
-    console.log(groupModify);
+    });
     setOpenModify(true);
   }
 
@@ -88,7 +87,6 @@ const GroupsPage = () => {
     })
       .then(response => {
         // handle success
-        console.log(response.data);
         setEventTrigger(!eventTrigger);
       })
       .catch(error => {

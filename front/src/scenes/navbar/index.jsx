@@ -18,6 +18,7 @@ import {
   Groups3,
   Menu,
   Close,
+  SettingsRemote
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
@@ -87,6 +88,9 @@ const Navbar = () => {
           </IconButton>
           <IconButton onClick={() => navigate("/groups")} >
             <Groups3 sx={{ color: dark, fontSize: "25px" }} />
+          </IconButton>
+          <IconButton onClick={() => navigate("/sendingprofiles")} >
+            <SettingsRemote sx={{ color: dark, fontSize: "25px" }} />
           </IconButton>
           <FormControl variant="standard" value={fullName}>
             <Select
@@ -165,6 +169,9 @@ const Navbar = () => {
             </IconButton>
             <IconButton onClick={() => navigate("/groups")} >
               <Groups3 sx={{ color: dark, fontSize: "25px" }} />
+            </IconButton>
+            <IconButton onClick={() => navigate("/sendingprofiles")} >
+              <SettingsRemote sx={{ color: dark, fontSize: "25px" }} />
             </IconButton>
             <FormControl variant="standard" value={fullName}>
               <Select
