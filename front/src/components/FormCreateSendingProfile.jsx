@@ -2,7 +2,7 @@ import { Stack, TextField, Button, Grid, Checkbox, Typography } from "@mui/mater
 import { DataGrid } from '@mui/x-data-grid';
 import { useState } from 'react';
 
-const FormCreateGroup = ({props}) => {
+const FormCreateTemplate = ({props}) => {
   const [header, setHeader] = useState("");
   const [value, setValue] = useState("");
 
@@ -132,4 +132,4 @@ const FormCreateGroup = ({props}) => {
   );
 };
 
-export default FormCreateGroup;
+export default FormCreateTemplate;

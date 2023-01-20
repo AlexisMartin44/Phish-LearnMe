@@ -5,12 +5,14 @@ import ProfilePage from "scenes/profilePage";
 import CampainsPage from "scenes/campainsPage";
 import GroupsPage from "scenes/groupsPage";
 import CampainPage from 'scenes/campainPage';
+import SendingProfilesPage from 'scenes/sendingProfilesPage';
+import TemplatesPage from 'scenes/templatesPage';
+import LandingPagesPage from 'scenes/landingPagesPage';
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
-import SendingProfilesPage from 'scenes/sendingProfilesPage';
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -47,6 +49,14 @@ function App() {
             <Route
               path="/sendingprofiles"
               element={isAuth ? <SendingProfilesPage /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/templates"
+              element={isAuth ? <TemplatesPage /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/landingpages"
+              element={isAuth ? <LandingPagesPage /> : <Navigate to="/" />}
             />
           </Routes>
         </ThemeProvider>
