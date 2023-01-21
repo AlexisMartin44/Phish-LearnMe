@@ -1,24 +1,86 @@
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { VictoryPie, VictoryAnimation, VictoryLabel } from "victory";
 
 const calculatePercent = (percentage) => {
-  return [{ x: 1, y: percentage }, { x: 2, y: 100 - percentage }];
+  return [{ x: 1, y: Math.round(percentage) }, { x: 2, y: 100 - Math.round(percentage) }];
 }
 
 const HomeCharts = () => {
-  const [data, setData] = useState([]);
   const [chartsData, setChartsData] = useState([{percent: 0, data: calculatePercent(0)}, {percent: 0, data: calculatePercent(0)}, {percent: 0, data: calculatePercent(0)}, {percent: 0, data: calculatePercent(0)}, {percent: 0, data: calculatePercent(0)}]);
+  const emailString = ["Emails envoyés", "Emails ouverts", "Liens cliqués", "Données soumises", "Emails reportés"];
+  const [chartsStats, setChartsStats] = useState([0, 0, 0, 0, 0]);
 
+  const calculateChartsStats = (data) => {
+      let tab = [0, 0, 0, 0, 0];
+      setChartsStats(chartsStats => [0, 0, 0, 0, 0]);
+      data.forEach(campain => {
+        campain.results.forEach(result => {
+          if(result.status === "Email reported") {
+            for(let i=0; i<5; i++) {
+              tab[i]++;
+            }
+            setChartsStats(chartsStats => chartsStats.map((chartData) => {
+                return chartData + 1;
+            }));
+          } else if(result.status === "Submitted Data") {
+            for(let i=0; i<4; i++) {
+              tab[i]++;
+            }
+            setChartsStats(chartsStats => chartsStats.map((chartData, index) => {
+              if(index < 4)
+                return chartData + 1;
+              else
+                return chartData;
+            }));
+          } else if(result.status === "Clicked Link") {
+            for(let i=0; i<3; i++) {
+              tab[i]++;
+            }
+            setChartsStats(chartsStats => chartsStats.map((chartData, index) => {
+              if(index < 3)
+                return chartData + 1;
+              else
+                return chartData;
+            }));
+          } else if(result.status === "Email Opened") {
+            for(let i=0; i<2; i++) {
+              tab[i]++;
+            }
+            setChartsStats(chartsStats => chartsStats.map((chartData, index) => {
+              if(index < 2)
+                return chartData + 1;
+              else
+                return chartData;
+            }));
+          } else if(result.status === "Email Sent") {
+            for(let i=0; i<1; i++) {
+              tab[i]++;
+            }
+            setChartsStats(chartsStats => chartsStats.map((chartData, index) => {
+              if(index < 1)
+                return chartData + 1;
+              else
+                return chartData;
+            }));
+          }
+        });
+      });
+      setChartsData([
+        {percent: 100, data: calculatePercent(100)}, 
+        {percent: Math.round(tab[1]/tab[0]), data: calculatePercent(tab[1]/tab[0])}, 
+        {percent: Math.round(tab[2]/tab[0]), data: calculatePercent(tab[2]/tab[0])},
+        {percent: Math.round(tab[3]/tab[0]), data: calculatePercent(tab[3]/tab[0])},
+        {percent: Math.round(tab[4]/tab[0]), data: calculatePercent(tab[4]/tab[0])}]);
+    }
 
   useEffect(() => {
     async function getData() {
       await axios.get(`${process.env.REACT_APP_GOPHISH_API}/campaigns/?api_key=${process.env.REACT_APP_GOPHISH_API_KEY}`)
       .then(response => {
         // handle success
-        setData(response.data);
-        setChartsData(percent => [{percent: 25, data: calculatePercent(25)}, {percent: 30, data: calculatePercent(30)}, {percent: 60, data: calculatePercent(60)}, {percent: 80, data: calculatePercent(80)}, {percent: 100, data: calculatePercent(100)}])
+        calculateChartsStats(response.data);
       })
       .catch(error => {
         // handle error
@@ -29,39 +91,44 @@ const HomeCharts = () => {
   }, []);
 
   return (
-    <Stack sx={{marginTop: 10}} fullWidth spacing={2}  direction={{ xs: 'column', sm: 'row' }}  justifyContent="space-evenly" alignItems="center">
-      {chartsData.map((chart) => {
-      return (<svg viewBox="0 0 50 50" width="10%">
-        <VictoryPie
-          standalone={false}
-          animate={{ duration: 1000 }}
-          width={50} height={50}
-          data={chart.data}
-          radius={20}
-          innerRadius={19}
-          cornerRadius={2}
-          labels={() => null}
-          style={{
-            data: { fill: ({ datum }) => {
-              const color = datum.y > 30 ? "green" : "red";
-              return datum.x === 1 ? color : "transparent";
-            }
-            }
-          }}
-        />
-        <VictoryAnimation duration={2000} data={chart}>
-          {(newProps) => {
-            return (
-              <VictoryLabel
-                textAnchor="middle" verticalAnchor="middle"
-                x={25} y={25}
-                text={`${Math.round(newProps.percent)}%`}
-                style={{ fontSize: 5 }}
-              />
-            );
-          }}
-        </VictoryAnimation>
-      </svg>);})}
+    <Stack sx={{marginTop: 10}} spacing={2}  direction={{ xs: 'column', sm: 'row' }}  justifyContent="space-evenly" alignItems="center">
+      {chartsData.map((chart, index) => {
+        console.log(chart.percent);
+      return ( <Stack key={index} sx={{width: "12%"}} alignItems="center" spacing={4}>
+          <svg viewBox="0 0 50 50" width="100%">
+            <VictoryPie
+              standalone={false}
+              animate={{ duration: 1000 }}
+              width={50} height={50}
+              data={chart.data}
+              radius={20}
+              innerRadius={19}
+              cornerRadius={2}
+              labels={() => null}
+              style={{
+                data: { fill: ({ datum }) => {
+                  const color = datum.y > 30 ? "green" : "red";
+                  return datum.x === 1 ? color : "transparent";
+                }
+                }
+              }}
+            />
+            <VictoryAnimation duration={2000} data={chart}>
+              {(newProps) => {
+                return (
+                  <VictoryLabel
+                    textAnchor="middle" verticalAnchor="middle"
+                    x={25} y={25}
+                    text={`${chartsStats[index]}`}
+                    style={{ fontSize: 5 }}
+                  />
+                );
+              }}
+            </VictoryAnimation>
+          </svg>
+          <Typography>{emailString[index]} : {Math.round(chart.percent)}%</Typography>
+        </Stack>
+      );})}
     </Stack>
   );
 };
