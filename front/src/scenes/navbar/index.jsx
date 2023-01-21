@@ -18,7 +18,9 @@ import {
   Groups3,
   Menu,
   Close,
-  SettingsRemote
+  SettingsRemote,
+  AttachEmail,
+  ScreenShare
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
@@ -91,6 +93,12 @@ const Navbar = () => {
           </IconButton>
           <IconButton onClick={() => navigate("/sendingprofiles")} >
             <SettingsRemote sx={{ color: dark, fontSize: "25px" }} />
+          </IconButton>
+          <IconButton onClick={() => navigate("/templates")} >
+            <AttachEmail sx={{ color: dark, fontSize: "25px" }} />
+          </IconButton>
+          <IconButton onClick={() => navigate("/landingpages")} >
+            <ScreenShare sx={{ color: dark, fontSize: "25px" }} />
           </IconButton>
           <FormControl variant="standard" value={fullName}>
             <Select
@@ -172,6 +180,12 @@ const Navbar = () => {
             </IconButton>
             <IconButton onClick={() => navigate("/sendingprofiles")} >
               <SettingsRemote sx={{ color: dark, fontSize: "25px" }} />
+            </IconButton>
+            <IconButton onClick={() => navigate("/templates")} >
+              <AttachEmail sx={{ color: dark, fontSize: "25px" }} />
+            </IconButton>
+            <IconButton onClick={() => navigate("/landingpages")} >
+              <ScreenShare sx={{ color: dark, fontSize: "25px" }} />
             </IconButton>
             <FormControl variant="standard" value={fullName}>
               <Select
