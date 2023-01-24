@@ -20,11 +20,13 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
+    "react-horizontal-timeline": "^1.5.3",
     "react-moment": "^1.1.2",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
     "redux-persist": "^6.0.0",
+    "victory": "^36.6.8",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },

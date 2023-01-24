@@ -3,7 +3,7 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import Navbar from 'scenes/navbar';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Button,
   Box,
@@ -29,6 +29,7 @@ export default function CampainsPage() {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const navigate = useNavigate();
+  const location = useLocation();
 
   const deleteCampain = (id) => {
     axios.delete(`${process.env.REACT_APP_GOPHISH_API}/campaigns/${id}/?api_key=${process.env.REACT_APP_GOPHISH_API_KEY}`)
@@ -69,7 +70,6 @@ export default function CampainsPage() {
     })
       .then(response => {
         // handle success
-        console.log(response.data);
         setEventTrigger(!eventTrigger);
       })
       .catch(error => {
@@ -125,7 +125,7 @@ export default function CampainsPage() {
       });
     }
     getData();
-  }, [eventTrigger]);
+  }, [eventTrigger, location]);
 
   return (
     <Box>
