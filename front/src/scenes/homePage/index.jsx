@@ -12,13 +12,12 @@ const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { _id, picturePath } = useSelector((state) => state.user);
   const [data, setData] = useState([]);
-  const [campains, setCampains] = useState([]);
   const [eventTrigger, setEventTrigger] = useState(false);
   const navigate = useNavigate();
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'name', headerName: 'Nom', width: 300 },
+    { field: 'name', headerName: 'Nom', width: 200 },
     {
       field: 'created_date',
       headerName: 'Date de création',
@@ -61,7 +60,6 @@ const HomePage = () => {
       await axios.get(`${process.env.REACT_APP_GOPHISH_API}/campaigns/?api_key=${process.env.REACT_APP_GOPHISH_API_KEY}`)
       .then(response => {
         // handle success
-        setCampains(response.data);
         setData(response.data.slice(-3));
       })
       .catch(error => {
@@ -98,7 +96,7 @@ const HomePage = () => {
         }
         </Box>
       </Stack>
-      <HomeCharts />
+      <HomeCharts props={{eventTrigger}} />
     </Box>
   );
 };

@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Stack, Typography, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from 'react';
 import { VictoryPie, VictoryAnimation, VictoryLabel } from "victory";
 import { useTheme } from '@mui/material/styles';
@@ -9,12 +9,13 @@ const calculatePercent = (percentage) => {
   return [{ x: 1, y: Math.round(percentage) }, { x: 2, y: 100 - Math.round(percentage) }];
 }
 
-const CampainCharts = () => {
+const CampainCharts = ({props}) => {
   const [chartsData, setChartsData] = useState([{percent: 0, data: calculatePercent(0)}, {percent: 0, data: calculatePercent(0)}, {percent: 0, data: calculatePercent(0)}, {percent: 0, data: calculatePercent(0)}, {percent: 0, data: calculatePercent(0)}]);
   const emailString = ["Emails envoyés", "Emails ouverts", "Liens cliqués", "Données soumises"];
   const [chartsStats, setChartsStats] = useState([0, 0, 0, 0]);
   const theme = useTheme();
   const location = useLocation();
+  const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const dark = theme.palette.neutral.dark;
 
   const calculateChartsStats = (data) => {
@@ -84,12 +85,12 @@ const CampainCharts = () => {
       });
     }
     getData();
-  }, [location.state.id]);
+  }, [location.state.id, props.eventTrigger]);
 
   return (
     <Stack sx={{marginTop: 4}} spacing={2}  direction={{ xs: 'column', sm: 'row' }}  justifyContent="space-evenly" alignItems="center">
       {chartsData.map((chart, index) => {
-      return ( <Stack key={index} sx={{width: "12%"}} alignItems="center" spacing={4}>
+      return ( <Stack key={index} sx={{width: isNonMobileScreens ? "12%" : "50%"}} alignItems="center" spacing={4}>
           <svg viewBox="0 0 50 50" width="100%">
             <VictoryPie
               standalone={false}
@@ -121,7 +122,7 @@ const CampainCharts = () => {
               }}
             </VictoryAnimation>
           </svg>
-          <Typography>{emailString[index]} : {Math.round(chart.percent)}%</Typography>
+          <Typography sx={{fontSize: isNonMobileScreens ? 12 : 20}}>{emailString[index]} : {Math.round(chart.percent)}%</Typography>
         </Stack>
       );})}
     </Stack>
