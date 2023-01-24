@@ -1,68 +1,69 @@
 import { Stack, Typography } from "@mui/material";
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { VictoryPie, VictoryAnimation, VictoryLabel } from "victory";
 import { useTheme } from '@mui/material/styles';
+import axios from "axios";
+import {useLocation} from 'react-router-dom';
 
 const calculatePercent = (percentage) => {
   return [{ x: 1, y: Math.round(percentage) }, { x: 2, y: 100 - Math.round(percentage) }];
 }
 
-const HomeCharts = () => {
+const CampainCharts = () => {
   const [chartsData, setChartsData] = useState([{percent: 0, data: calculatePercent(0)}, {percent: 0, data: calculatePercent(0)}, {percent: 0, data: calculatePercent(0)}, {percent: 0, data: calculatePercent(0)}, {percent: 0, data: calculatePercent(0)}]);
   const emailString = ["Emails envoyés", "Emails ouverts", "Liens cliqués", "Données soumises"];
   const [chartsStats, setChartsStats] = useState([0, 0, 0, 0]);
   const theme = useTheme();
+  const location = useLocation();
   const dark = theme.palette.neutral.dark;
 
   const calculateChartsStats = (data) => {
       let tab = [0, 0, 0, 0];
       setChartsStats(chartsStats => [0, 0, 0, 0]);
-      data.forEach(campain => {
-        campain.results.forEach(result => {
-          if(result.status === "Submitted Data") {
-            for(let i=0; i<4; i++) {
-              tab[i]++;
-            }
-            setChartsStats(chartsStats => chartsStats.map((chartData, index) => {
-              if(index < 4)
-                return chartData + 1;
-              else
-                return chartData;
-            }));
-          } else if(result.status === "Clicked Link") {
-            for(let i=0; i<3; i++) {
-              tab[i]++;
-            }
-            setChartsStats(chartsStats => chartsStats.map((chartData, index) => {
-              if(index < 3)
-                return chartData + 1;
-              else
-                return chartData;
-            }));
-          } else if(result.status === "Email Opened") {
-            for(let i=0; i<2; i++) {
-              tab[i]++;
-            }
-            setChartsStats(chartsStats => chartsStats.map((chartData, index) => {
-              if(index < 2)
-                return chartData + 1;
-              else
-                return chartData;
-            }));
-          } else if(result.status === "Email Sent") {
-            for(let i=0; i<1; i++) {
-              tab[i]++;
-            }
-            setChartsStats(chartsStats => chartsStats.map((chartData, index) => {
-              if(index < 1)
-                return chartData + 1;
-              else
-                return chartData;
-            }));
+      data.results.forEach(result => {
+        if(result.status === "Submitted Data") {
+          for(let i=0; i<4; i++) {
+            tab[i]++;
           }
-        });
+          setChartsStats(chartsStats => chartsStats.map((chartData, index) => {
+            if(index < 4)
+              return chartData + 1;
+            else
+              return chartData;
+          }));
+        } else if(result.status === "Clicked Link") {
+          for(let i=0; i<3; i++) {
+            tab[i]++;
+          }
+          setChartsStats(chartsStats => chartsStats.map((chartData, index) => {
+            if(index < 3)
+              return chartData + 1;
+            else
+              return chartData;
+          }));
+        } else if(result.status === "Email Opened") {
+          for(let i=0; i<2; i++) {
+            tab[i]++;
+          }
+          setChartsStats(chartsStats => chartsStats.map((chartData, index) => {
+            if(index < 2)
+              return chartData + 1;
+            else
+              return chartData;
+          }));
+        } else if(result.status === "Email Sent") {
+          for(let i=0; i<1; i++) {
+            tab[i]++;
+          }
+          setChartsStats(chartsStats => chartsStats.map((chartData, index) => {
+            if(index < 1)
+              return chartData + 1;
+            else
+              return chartData;
+          }));
+        }
       });
+
       setChartsData([
         {percent: 100, data: calculatePercent(100)}, 
         {percent: Math.round(tab[1]/tab[0]), data: calculatePercent(tab[1]/tab[0])}, 
@@ -72,7 +73,7 @@ const HomeCharts = () => {
 
   useEffect(() => {
     async function getData() {
-      await axios.get(`${process.env.REACT_APP_GOPHISH_API}/campaigns/?api_key=${process.env.REACT_APP_GOPHISH_API_KEY}`)
+      await axios.get(`${process.env.REACT_APP_GOPHISH_API}/campaigns/${location.state.id}/results/?api_key=${process.env.REACT_APP_GOPHISH_API_KEY}`)
       .then(response => {
         // handle success
         calculateChartsStats(response.data);
@@ -83,10 +84,10 @@ const HomeCharts = () => {
       });
     }
     getData();
-  }, []);
+  }, [location.state.id]);
 
   return (
-    <Stack sx={{marginTop: 10}} spacing={2}  direction={{ xs: 'column', sm: 'row' }}  justifyContent="space-evenly" alignItems="center">
+    <Stack sx={{marginTop: 4}} spacing={2}  direction={{ xs: 'column', sm: 'row' }}  justifyContent="space-evenly" alignItems="center">
       {chartsData.map((chart, index) => {
       return ( <Stack key={index} sx={{width: "12%"}} alignItems="center" spacing={4}>
           <svg viewBox="0 0 50 50" width="100%">
@@ -113,7 +114,7 @@ const HomeCharts = () => {
                   <VictoryLabel
                     textAnchor="middle" verticalAnchor="middle"
                     x={25} y={25}
-                    text={`${chartsStats[index]}`}
+                    text={`${chartsStats[index]}`} 
                     style={{ fill: dark, fontSize: 10 }}
                   />
                 );
@@ -127,4 +128,4 @@ const HomeCharts = () => {
   );
 };
 
-export default HomeCharts;
+export default CampainCharts;
