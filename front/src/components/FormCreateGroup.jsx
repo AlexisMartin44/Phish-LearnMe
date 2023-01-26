@@ -60,6 +60,32 @@ const FormCreateGroup = ({props}) => {
     }
   }
 
+  const handleImportCsv = (event) => {
+    // Récupère le fichier sélectionné
+    const csvFile = event.target.files[0];
+
+    // Vérifie que le fichier est bien un fichier CSV
+    if (csvFile.type !== 'text/csv') {
+        alert("Invalid file type. Please select a CSV file.");
+        return;
+    }
+
+    // Utilise la fonction FileReader pour lire le contenu du fichier
+    const reader = new FileReader();
+    reader.readAsText(csvFile);
+    reader.onload = function() {
+      // Stocke le contenu du fichier dans un état
+      let arr = reader.result.split(/\r?\n/);
+      arr.forEach((user, index) => {
+        if (index !== 0) {
+          let userSplit = user.split(",");
+          if(!userSplit.includes(""))
+            props.setGroup((group) => ([...group, {first_name: userSplit[1], last_name: userSplit[2], email: userSplit[0], position: userSplit[3]}]));
+        }
+      })
+    }
+  }
+
 
   return (
     <Stack spacing={2} >
@@ -73,7 +99,7 @@ const FormCreateGroup = ({props}) => {
         onChange={e => props.setName(e.target.value)}
       />
       <Grid container>
-        <Grid xs>
+        <Grid item={true} xs>
           <TextField
             id="firstName"
             label="Prénom"
@@ -82,7 +108,7 @@ const FormCreateGroup = ({props}) => {
             onChange={e => setFirstName(e.target.value)}
           />
         </Grid>
-        <Grid xs>
+        <Grid item={true} xs>
           <TextField
             id="lastName"
             label="Nom"
@@ -91,7 +117,7 @@ const FormCreateGroup = ({props}) => {
             onChange={e => setLastName(e.target.value)}
           />
         </Grid>
-        <Grid xs>
+        <Grid item={true} xs>
           <TextField
             id="email"
             label="Email"
@@ -101,7 +127,7 @@ const FormCreateGroup = ({props}) => {
             onChange={handleChange}
           />
         </Grid>
-        <Grid xs>
+        <Grid item={true} xs>
           <TextField
             id="position"
             label="Poste"
@@ -112,12 +138,22 @@ const FormCreateGroup = ({props}) => {
         </Grid>
       </Grid>
       <Grid container>
-        <Grid xs>
-          <Button disabled variant="outlined" color="warning">
-            Importer un CSV
-          </Button>
+        <Grid item={true} xs>
+          <label htmlFor="csv-file">
+            <input
+              style={{ display: "none" }}
+              id="csv-file"
+              name="csv-file"
+              type="file"
+              accept=".csv"
+              onChange={handleImportCsv}
+            />
+            <Button color="warning" variant="outlined" component="span">
+              Importer un CSV
+            </Button>
+          </label>
         </Grid>
-        <Grid xs>
+        <Grid item={true} xs>
           <Button variant="outlined" color="warning" onClick={handleAddUser}>
             Ajouter
           </Button>

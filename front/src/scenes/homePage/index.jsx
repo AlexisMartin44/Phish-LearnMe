@@ -1,4 +1,4 @@
-import { Box, useMediaQuery, Button, Stack } from "@mui/material";
+import { Box, useMediaQuery, Button, Stack, useTheme, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import Navbar from "scenes/navbar";
 import UserWidget from "scenes/widgets/UserWidget";
@@ -7,6 +7,13 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { DataGrid } from '@mui/x-data-grid';
 import HomeCharts from 'components/HomeCharts';
+import {
+  LocalShipping,
+  Groups3,
+  SettingsRemote,
+  AttachEmail,
+  ScreenShare
+} from "@mui/icons-material";
 
 const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -14,6 +21,8 @@ const HomePage = () => {
   const [data, setData] = useState([]);
   const [eventTrigger, setEventTrigger] = useState(false);
   const navigate = useNavigate();
+  const theme = useTheme();
+  const dark = theme.palette.neutral.dark;
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -73,7 +82,29 @@ const HomePage = () => {
   return (
     <Box>
       <Navbar />
-      <Stack sx={{marginTop: 10}} spacing={2}  direction={{ xs: 'column', sm: 'row' }}  alignItems="center">
+      <Stack sx={{marginTop: 10, width: "100vw"}} justifyContent="space-evenly" alignItems="center" spacing={2} direction={{ xs: 'column', sm: 'row' }}>
+        <Stack alignItems="center" spacing={2}>
+          <LocalShipping sx={{ color: dark, fontSize: "25px" }} />
+          <Typography variant="subtitle" sx={{color: dark}}>Campagnes</Typography>
+        </Stack>
+        <Stack alignItems="center" spacing={2}>
+          <Groups3 sx={{ color: dark, fontSize: "25px" }} />
+          <Typography variant="subtitle" sx={{color: dark}}>Groupes</Typography>
+        </Stack>
+        <Stack alignItems="center" spacing={2}>
+          <SettingsRemote sx={{ color: dark, fontSize: "25px" }} />
+          <Typography variant="subtitle" sx={{color: dark}}>Profils d'envoi</Typography>
+        </Stack>
+        <Stack alignItems="center" spacing={2}>
+          <AttachEmail sx={{ color: dark, fontSize: "25px" }} />
+          <Typography variant="subtitle" sx={{color: dark}}>Templates</Typography>
+        </Stack>
+        <Stack alignItems="center" spacing={2}>
+          <ScreenShare sx={{ color: dark, fontSize: "25px" }} />
+          <Typography variant="subtitle" sx={{color: dark}}>Landing Pages</Typography>
+        </Stack>
+      </Stack>
+      <Stack sx={{marginTop: 5}} spacing={2}  direction={{ xs: 'column', sm: 'row' }}  alignItems="center">
         <Box
           padding="2rem 6%"
           display={isNonMobileScreens ? "flex" : "block"}

@@ -19,7 +19,7 @@ import FormModifyGroup from "components/FormModifyGroup";
 const GroupsPage = () => {
   const [name, setName] = useState('');
   const [nameModify, setNameModify] = useState('');
-  const [group, setGroup] = useState('');
+  const [group, setGroup] = useState([]);
   const [groupModify, setGroupModify] = useState('');
   const [id, setId] = useState();
   const [data, setData] = useState(null);
