@@ -121,7 +121,7 @@ const Navbar = () => {
               <MenuItem value={fullName}>
                 <Typography>{fullName}</Typography>
               </MenuItem>
-              <MenuItem onClick={() => navigate('/')}>Créer un compte</MenuItem>
+              <MenuItem onClick={() => navigate('/register')}>Créer un compte</MenuItem>
               <MenuItem onClick={() => dispatch(setLogout())}>Déconnexion</MenuItem>
             </Select>
           </FormControl>
@@ -208,6 +208,9 @@ const Navbar = () => {
               >
                 <MenuItem value={fullName}>
                   <Typography>{fullName}</Typography>
+                </MenuItem>
+                <MenuItem onClick={() => navigate("/register")}>
+                  Créer un compte
                 </MenuItem>
                 <MenuItem onClick={() => dispatch(setLogout())}>
                   Déconnexion
