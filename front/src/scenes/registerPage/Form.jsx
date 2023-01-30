@@ -11,6 +11,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
+import { useSelector } from "react-redux";
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("Champs requis"),
@@ -33,6 +34,7 @@ const initialValuesRegister = {
 const Form = () => {
   const { palette } = useTheme();
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const token = useSelector((state) => state.token);
 
   const register = async (values, onSubmitProps) => {
     // this allows us to send form info with image
@@ -46,6 +48,7 @@ const Form = () => {
       "http://localhost:3001/auth/register",
       {
         method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
         body: formData,
       }
     );
