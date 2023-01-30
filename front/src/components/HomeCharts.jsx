@@ -66,9 +66,9 @@ const HomeCharts = ({props}) => {
       });
       setChartsData([
         {percent: 100, data: calculatePercent(100)}, 
-        {percent: Math.round(tab[1]/tab[0]), data: calculatePercent(tab[1]/tab[0])}, 
-        {percent: Math.round(tab[2]/tab[0]), data: calculatePercent(tab[2]/tab[0])},
-        {percent: Math.round(tab[3]/tab[0]), data: calculatePercent(tab[3]/tab[0])}]);
+        {percent: Math.round(tab[1]/tab[0] * 100), data: calculatePercent(tab[1]/tab[0] * 100)}, 
+        {percent: Math.round(tab[2]/tab[0] * 100), data: calculatePercent(tab[2]/tab[0] * 100)},
+        {percent: Math.round(tab[3]/tab[0] * 100), data: calculatePercent(tab[3]/tab[0] * 100)}]);
     }
 
   useEffect(() => {
